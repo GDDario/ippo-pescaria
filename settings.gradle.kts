@@ -1,2 +1,2 @@
-rootProject.name = "test-ippo-gradle"
+rootProject.name = "ippo-pescaria"
 
