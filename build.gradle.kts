@@ -11,13 +11,14 @@ repositories {
 
 dependencies {
     // Compilation
-    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
-
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
     // Dependencies
     implementation("de.mkammerer:argon2-jvm:2.11")
 
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.2")
+
+//    runtimeOnly("javax.servlet:javax.servlet-api:4.0.1")
 }
 
 tasks.test {

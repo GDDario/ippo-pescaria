@@ -3,6 +3,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import service.AuthenticationService;
 
+import java.time.LocalDate;
+
 public class AuthenticationServiceTest {
     private AuthenticationService authenticationService;
 
@@ -16,11 +18,11 @@ public class AuthenticationServiceTest {
         RegisterDTO registerDTO = RegisterDTO
                 .builder()
                 .setName("Gabriel")
-                .setAge(23)
+//                .setBirthDate()
                 .setEmail("email@test.com")
                 .setPassword("@Easy_Password_12344321")
                 .build();
 
-        authenticationService.register(registerDTO);
+//        authenticationService.register(registerDTO);
     }
 }

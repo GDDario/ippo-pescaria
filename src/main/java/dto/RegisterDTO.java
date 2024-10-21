@@ -1,16 +1,40 @@
 package dto;
 
+import java.time.LocalDate;
+
 public class RegisterDTO {
-    public String name;
-    public int age;
-    public String email;
-    public String password;
+    private String name;
+    private String birthDate;
+    private String email;
+    private String password;
+    private String passwordConfirmation;
 
     private RegisterDTO(Builder builder) {
         this.name = builder.getName();
-        this.age = builder.getAge();
+        this.birthDate = builder.getBirthDate();
         this.email = builder.getEmail();
         this.password = builder.getPassword();
+        this.passwordConfirmation = builder.getPasswordConfirmation();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
     }
 
     public static Builder builder() {
@@ -19,17 +43,18 @@ public class RegisterDTO {
 
     public static class Builder {
         private String name;
-        private int age;
+        private String birthDate;
         private String email;
         private String password;
+        private String passwordConfirmation;
 
         public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder setAge(int age) {
-            this.age = age;
+        public Builder setBirthDate(String birthDate) {
+            this.birthDate = birthDate;
             return this;
         }
 
@@ -47,8 +72,8 @@ public class RegisterDTO {
             return name;
         }
 
-        public int getAge() {
-            return age;
+        public String getBirthDate() {
+            return birthDate;
         }
 
         public String getEmail() {
@@ -57,6 +82,10 @@ public class RegisterDTO {
 
         public String getPassword() {
             return password;
+        }
+
+        public String getPasswordConfirmation() {
+            return passwordConfirmation;
         }
 
         public RegisterDTO build() {

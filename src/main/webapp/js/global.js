@@ -1,16 +1,16 @@
 const loginButton = document.getElementById('login-button');
-const loginModal = document.getElementById('login-modal');
+const authModal = document.getElementById('auth-modal');
 
 loginButton.addEventListener('click', () => {
     document.addEventListener('click', modalClickListener);
     document.addEventListener('keydown', modalKeyDownListener);
-    loginModal.classList.add('open');
+    authModal.classList.add('open');
 });
 
 const modalClickListener = function (e) {
     const element = e.target;
 
-    if (element.id === 'login-modal' || element.classList.contains('close-modal')) {
+    if (element.id === 'auth-modal' || element.classList.contains('close-modal')) {
         closeModal();
     }
 };
@@ -22,7 +22,17 @@ const modalKeyDownListener = function (e) {
 };
 
 function closeModal() {
-    loginModal.classList.remove('open');
+    authModal.classList.remove('open');
     document.removeEventListener('click', modalClickListener);
     document.removeEventListener('keydown', modalKeyDownListener);
+}
+
+function changeToRegisterForm() {
+    document.getElementsByClassName('modal-body login')[0].classList.remove('open');
+    document.getElementsByClassName('modal-body register')[0].classList.add('open');
+}
+
+function changeToLoginForm() {
+    document.getElementsByClassName('modal-body register')[0].classList.remove('open');
+    document.getElementsByClassName('modal-body login')[0].classList.add('open');
 }

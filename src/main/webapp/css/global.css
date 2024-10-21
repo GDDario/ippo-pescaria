@@ -16,7 +16,7 @@ input {
 /*
     Login modal configuration
 */
-#login-modal {
+#auth-modal {
     display: none; /* Initialize disabled */
     position: absolute;
     top: 0;
@@ -27,22 +27,32 @@ input {
     justify-content: center;
     align-items: center;
 }
-#login-modal.open {
+#auth-modal.open {
     display: flex;
     display: flex;
 }
 
 .modal-body {
     position: relative;
+    min-width: 471px;
     padding: 24px;
     background: #fff;
     border: 2px solid var(--main-color);
     border-radius: 8px;
     box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+}
+.modal-body.open {
+    display: block;
 }
 
 .modal-body h2 {
     margin-bottom: 4px;
+}
+
+.modal-body .call-to-auth a {
+    cursor: pointer;
+    color: var(--main-color);
 }
 
 .modal-body button.close-modal {
@@ -56,18 +66,17 @@ input {
     cursor: pointer;
 }
 
-#login-form {
+#auth-form {
     margin-top: 16px;
 }
 
-#login-form input[type="email"],
-#login-form input[type="password"] {
+#auth-form input:not([type='checkbox']) {
     width: 100%;
     margin-bottom: 12px;
     padding: 4px;
 }
 
-#login-form label {
+#auth-form label {
     display: block;
     width: 100%;
     margin-bottom: 1px;
@@ -79,14 +88,14 @@ input {
     gap: 4px;
 }
 
-#login-form button.login {
+#auth-form button.login {
     margin-top: 16px;
     width: 100%;
     padding: 4px 8px;
     cursor: pointer;
 }
 
-#login-form p {
+#auth-form p {
     margin-top: 4px;
     text-align: right;
 }

@@ -4,10 +4,10 @@
  */
 package controller;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  *
  * @author acer
  */
-public class AuthenticationController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +34,7 @@ public class AuthenticationController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AuthenticationController</title>");
+            out.println("<title>Servlet AuthenticationController POST</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AuthenticationController at " + request.getContextPath() + "</h1>");

@@ -52,22 +52,21 @@
             </section>
         </main>
 
-        <div id="login-modal" class="open">
-            <div class="modal-body">
+        <div id="auth-modal" class="open">
+            <div class="modal-body login">
                 <button class="close-modal">&#10006;</button>
-                        <p><% out.println("<p>asdsdi</p>"); %></p>
 
                 <div>
                     <h2>Login</h2>
-                    <p>Ainda não tem uma conta? <a href="#">Clique aqui para se cadastrar.</a></p>
+                    <p class="call-to-auth">Ainda não tem uma conta? <a onclick="changeToRegisterForm()">Clique aqui para se cadastrar.</a></p>
                 </div>
 
-                <form id="login-form" method="post" action="AuthenticationController">
+                <form id="auth-form" method="post" action="AuthenticationController">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" />
+                    <input type="email" name="email" id="email" required  />
 
                     <label for="password">Senha</label>
-                    <input type="password" name="password" id="password" />
+                    <input type="password" name="password" id="password" required />
 
                     <div class="remember-me-box">
                         <input type="checkbox" id="remember-me" />
@@ -76,6 +75,35 @@
 
                     <button class="login">Entrar</button>
                     <p><a href="#">Esqueci minha senha</a></p>
+                </form>
+            </div>
+
+            <div class="modal-body register open">
+                <button class="close-modal">&#10006;</button>
+
+                <div>
+                    <h2>Registro</h2>
+                    <p class="call-to-auth">Já tem uma conta? <a onclick="changeToLoginForm()">Clique aqui para fazer login.</a></p>
+                </div>
+
+                <form id="auth-form" method="post" action="RegisterController" name="register-form">
+                    <label for="name">Nome</label>
+                    <input type="text" name="name" id="name" required value="Makunouchi Ippo" />
+
+                    <label for="register-email">Email</label>
+                    <input type="email" name="email" id="register-email" required value="test@email.com" />
+
+                    <label for="birth-date">Data de nascimento</label>
+                    <input type="date" name="birth-date" id="birth-date" required value="12-16-2001" />
+
+                    <label for="register-password">Senha</label>
+                    <input type="password" name="password" id="register-password" required value="test@email.com" />
+
+                    <label for="password-confirmation">Confirme a senha</label>
+                    <input type="password" name="password-confirmation" id="password-confirmation" required value="test@email.com" />
+
+                    <button class="login">Registrar</button>
+                    <p><a href="privacy-policy.jsp" about="_blank">Nossa política de dados</a></p>
                 </form>
             </div>
         </div>
