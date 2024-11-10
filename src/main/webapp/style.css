@@ -219,3 +219,17 @@ a.dropdown-item:hover {
 .field-error {
     color: #f00;
 }
+
+.no-select {
+    user-select: none;
+}
+
+.cursor-text p,
+.cursor-text h5,
+.cursor-text h6 {
+    cursor: text;
+}
+
+.card-body {
+    cursor: default;
+}

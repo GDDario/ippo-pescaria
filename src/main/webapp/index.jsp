@@ -66,34 +66,7 @@
   <div class="container mb-5">
     <h3>Confira os barcos mais quentes dessa semana 🔥</h3>
 
-    <div id="products" class="row mt-4">
-      <%
-        for(int i = 0; i < 7; i++) {
-      %>
-
-      <div class="col-xl-3 col-lg-4 col-md-6 position-relative">
-        <div class="card product-item">
-          <i class="bi bi-heart-fill position-absolute liked"></i>
-          <i class="bi bi-heart position-absolute like"></i>
-          <img src="images/product-1-square.jpg" onclick="goToProductDetails(<%=i%>)" class="card-img-top" alt="..."
-            data-bs-toggle="tooltip" data-bs-placement="top" title="Clique para acessar todos os dados do barco">
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted  fw-light">Headphones</h6>
-            <h5 class="card-title">Sony WX-5</h5>
-            <p class="card-text price"> $100.75 <span class="float-end rating-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-              </span> </p>
-            <div class="text-center">
-              <a class="btn btn-dark w-100" onclick="showToast()" role="button"> Add To Cart</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <%
-        }
-      %>
+    <div id="hot-boats" class="row mt-4">
     </div>
   </div>
   

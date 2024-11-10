@@ -9,8 +9,6 @@ public class Boat {
     private BigInteger id;
     private UUID uuid;
     private String name;
-    private String text;
-    private BigInteger categoryId;
     private double pricePerDay;
     private int capacity;
     private int cabinsNumber;
@@ -21,16 +19,15 @@ public class Boat {
     private LocalDate manufactureDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Category category;
 
     public Boat() {
     }
 
-    public Boat(BigInteger id, UUID uuid, String name, String text, BigInteger categoryId, double pricePerDay, int capacity, int cabinsNumber, double length, double enginePower, int idealId, String equipments, LocalDate manufactureDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Boat(BigInteger id, UUID uuid, String name, double pricePerDay, int capacity, int cabinsNumber, double length, double enginePower, int idealId, String equipments, LocalDate manufactureDate, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
-        this.text = text;
-        this.categoryId = categoryId;
         this.pricePerDay = pricePerDay;
         this.capacity = capacity;
         this.cabinsNumber = cabinsNumber;
@@ -43,13 +40,18 @@ public class Boat {
         this.updatedAt = updatedAt;
     }
 
-    public Boat(UUID uuid, String text, double length, int capacity, double enginePower, double pricePerDay) {
+    public Boat(UUID uuid, String name, double length, int capacity, double enginePower, double pricePerDay, Category category) {
         this.uuid = uuid;
-        this.text = text;
+        this.name = name;
         this.length = length;
         this.capacity = capacity;
         this.enginePower = enginePower;
         this.pricePerDay = pricePerDay;
+        this.category = category;
+    }
+
+    public Boat(String name) {
+        this.name = name;
     }
 
     public BigInteger getId() {
@@ -74,22 +76,6 @@ public class Boat {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public BigInteger getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(BigInteger categoryId) {
-        this.categoryId = categoryId;
     }
 
     public double getPricePerDay() {
@@ -170,6 +156,14 @@ public class Boat {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
 
