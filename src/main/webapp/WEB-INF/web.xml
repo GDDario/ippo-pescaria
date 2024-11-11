@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+
+    <!-- Servlets register -->
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>controller.RegisterController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ClearSessionAttributesServlet</servlet-name>
+        <servlet-class>controller.ClearSessionAttributesServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>controller.LogoutController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>HotBoatsController</servlet-name>
+        <servlet-class>controller.HotBoatsController</servlet-class>
+    </servlet>
+
+    <!-- Mapping -->
+    <servlet-mapping>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/RegisterController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ClearSessionAttributesServlet</servlet-name>
+        <url-pattern>/ClearSessionAttributesServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HotBoatsController</servlet-name>
+        <url-pattern>/HotBoatsController</url-pattern>
+    </servlet-mapping>
+
+    <!-- Configuratopm -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- Error pages redirection rules -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+</web-app>
