@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/boats.html" tabindex="-1">
+                    <a class="nav-link" href="/ippo-pescaria/boats.jsp" tabindex="-1">
                         Barcos
                     </a>
                 </li>

@@ -3,31 +3,25 @@ package model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Category {
+public class Equipment {
     private int id;
     private UUID uuid;
     private String name;
-    private int groupId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Category() {
+    public Equipment() {
     }
 
-    public Category(String name) {
-        this.name = name;
-    }
-
-    public Category(int id, UUID uuid, String name, int groupId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Equipment(int id, UUID uuid, String name, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.uuid = uuid;
         this.name = name;
-        this.groupId = groupId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public Category(UUID uuid, String name) {
+    public Equipment(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;
     }
@@ -54,14 +48,6 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
     }
 
     public LocalDateTime getCreatedAt() {
