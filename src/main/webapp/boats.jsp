@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,116 +24,60 @@
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
     ></script>
+    <script src="js/boats.js"></script>
   </head>
-  <body onload="getFilters()">
+  <body onload="loadFilters()">
     <%@ include file="/components/header.jsp" %>
 
    <div class="container-fluid">
      <div class="row mt-4">
-       <div class="col-2 no-select">
-         <h4>Filtros</h4>
+       <div class="col-2 no-select scrollable">
+         <h4 class="d-flex align-items-center gap-2">Filtros <i class="bi bi-funnel-fill"></i></h4>
 
-         <div>
-            <h5>Tipos</h5>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Default checkbox
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-              <label class="form-check-label" for="flexCheckDefault2">
-                Default checkbox
-              </label>
-            </div>
+         <div id="categories" class="mt-4">
+            <h5>Tipos de barco</h5>
          </div>
 
          <hr>
 
-         <div>
-            <h5>Preco por dia<h5>
-
-            <div class="d-flex justify-content-between gap-2">
-                <div class="form-group">
-                  <label for="register-name" class="col-form-label">Minimo</label>
-                  <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                </div>
-
-                <div class="form-group">
-                  <label for="register-name" class="col-form-label">Maximo</label>
-                  <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                </div>
-            </div>
+         <div id="price-per-day">
+            <h5>Preço por dia<h5>
          </div>
 
-         <div>
+        <hr>
+
+         <div id="capacity">
             <h5>Capacidade<h5>
-
-            <div class="d-flex justify-content-between gap-2">
-                <input>
-                <label>Pessoas</label>
-            </div>
          </div>
 
-        <div>
+         <hr>
+
+        <div id="cabins-number">
             <h5>Numero de cabines<h5>
-
-            <div class="d-flex justify-content-between gap-2">
-                <input>
-                <label>cabines</label>
-            </div>
          </div>
-         <div>
+
+         <hr>
+
+         <div id="boat-length">
              <h5>Comprimento do barco<h5>
-
-             <div class="d-flex justify-content-between gap-2">
-                 <div class="form-group">
-                   <label for="register-name" class="col-form-label">Minimo</label>
-                   <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                 </div>
-
-                 <div class="form-group">
-                   <label for="register-name" class="col-form-label">Maximo</label>
-                   <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                 </div>
-             </div>
           </div>
 
-        <div>
+          <hr>
+
+        <div id="engine-power">
              <h5>Poder do motor<h5>
+        </div>
+        
+        <hr>
 
-             <div class="d-flex justify-content-between gap-2">
-                 <div class="form-group">
-                   <label for="register-name" class="col-form-label">Minimo</label>
-                   <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                 </div>
-
-                 <div class="form-group">
-                   <label for="register-name" class="col-form-label">Maximo</label>
-                   <input type="number" name="name" class="form-control" id="register-name" value="Makunouchi Ippo">
-                 </div>
-             </div>
+        <div id="manufacture-year">
+          <h5>Ano de fabricação<h5>
         </div>
 
-         <div>
+        <hr>
+
+         <div id="equipments">
             <h5>Equipamentos</h5>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
-                Wakeboard
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-              <label class="form-check-label" for="flexCheckDefault2">
-                Ar-condicionado
-              </label>
-            </div>
          </div>
 
        </div>
@@ -139,13 +85,14 @@
        <div class="col-10">
          <h4>Barcos</h4>
 
-         <p>x barcos encontrados</p>
+         <p id="boats-found">Carregando ...</p>
+         <div id="filtered-boats" class="row mt-4"></div>
        </div>
      </div>
    </div>
     
-      <%@ include file="/components/footer.jsp" %>
+    <%@ include file="/components/footer.jsp" %>
 
-      <script src="app.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

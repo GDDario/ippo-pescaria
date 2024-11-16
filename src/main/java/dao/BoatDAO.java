@@ -1,7 +1,7 @@
 package dao;
 
 import dto.FindBoatsByFilterDTO;
-import dto.FindFiltersDTO;
+import dto.BoatsFiltersDTO;
 import model.Boat;
 import model.Category;
 import service.DatabaseConnection;
@@ -61,8 +61,8 @@ public class BoatDAO {
         return boats;
     }
 
-    public FindFiltersDTO findFilters() {
-        FindFiltersDTO dto = new FindFiltersDTO();
+    public BoatsFiltersDTO findFilters() {
+        BoatsFiltersDTO dto = new BoatsFiltersDTO();
 
         try {
             Connection connection = new DatabaseConnection().getConnection();
@@ -76,7 +76,8 @@ public class BoatDAO {
                         	MAX(boats.capacity) as max_capacity,
                         	MAX(boats.engine_power) as max_engine_power,
                         	MAX(boats.cabins_number) as max_cabins_number,
-                        	MAX(boats.manufacture_date) as manufacturer_end_date
+                        	MIN(EXTRACT(YEAR FROM boats.manufacture_date)) as manufacturer_start_date,
+                        	MAX(EXTRACT(YEAR FROM boats.manufacture_date)) as manufacturer_end_date
                         FROM
                         	boats;
                         """;
@@ -90,9 +91,10 @@ public class BoatDAO {
                 dto.setMaxBoatLength(rs.getDouble("max_boat_length"));
                 dto.setMaxPricePerDay(rs.getDouble("max_price_per_day"));
                 dto.setMaxCapacity(rs.getInt("max_capacity"));
-                dto.setMaxEnginePopwer(rs.getDouble("max_engine_power"));
+                dto.setMaxEnginePower(rs.getDouble("max_engine_power"));
                 dto.setMaxCabinsNumber(rs.getInt("max_cabins_number"));
-                dto.setManufacturerEndDate(rs.getDate("manufacturer_end_date").toLocalDate());
+                dto.setManufacturerStartDate(rs.getInt("manufacturer_start_date"));
+                dto.setManufacturerEndDate(rs.getInt("manufacturer_end_date"));
             }
         } catch (SQLException error) {
             System.out.println("Exception on getting hot boats: " + error);
@@ -108,57 +110,92 @@ public class BoatDAO {
             Connection connection = new DatabaseConnection().getConnection();
 
             if (connection != null) {
-                PreparedStatement ps;
-                String sql = """
-                        SELECT boats.*, categories.uuid
-                            FROM boats
-                            JOIN categories ON categories.id = boats.category_id
-                        WHERE
-                            categories.uuid = ANY (?)
-                            AND string_to_array(equipments, ', ') && ?
-                            AND length > ? AND length < ?
-                            AND price_per_day > ? AND price_per_day < ?
-                            AND capacity > ? AND capacity < ?
-                            AND engine_power > ? AND engine_power < ?
-                            AND cabins_number >= ? AND cabins_number < ?
-                            AND manufacture_date BETWEEN ? AND ?;
-                        """;
+                StringBuilder sqlBuilder = new StringBuilder("""
+                SELECT 
+                    boats.uuid, boats.name, boats.length, boats.capacity, 
+                    boats.engine_power, boats.price_per_day, 
+                    categories.name AS category_name
+                FROM boats
+                JOIN categories ON categories.id = boats.category_id
+                WHERE
+                    length >= ? AND length <= ?
+                    AND price_per_day >= ? AND price_per_day <= ?
+                    AND capacity >= ? AND capacity <= ?
+                    AND engine_power >= ? AND engine_power <= ?
+                    AND cabins_number >= ? AND cabins_number <= ?
+                    AND EXTRACT(YEAR FROM manufacture_date) >= ? AND EXTRACT(YEAR FROM manufacture_date) <= ?
+                """);
 
-                     PreparedStatement pstmt = connection.prepareStatement(sql);
+                if (!dto.getCategoryUuids().isEmpty()) {
+                    sqlBuilder.append(" AND boats.category_id IN (SELECT id FROM categories WHERE uuid = ANY (?)) ");
+                }
 
-                    Array uuidArray = connection.createArrayOf("UUID", dto.getCategoryUuids().toArray());
-                    pstmt.setArray(1, uuidArray);
+                if (!dto.getEquipmentsArray().isEmpty()) {
+                    sqlBuilder.append("""
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM unnest(string_to_array(?, ',')) AS required_equipment
+                        WHERE lower(trim(required_equipment)) NOT IN (
+                            SELECT lower(trim(equipment))
+                            FROM unnest(string_to_array(boats.equipments, ',')) AS equipment
+                        )
+                    )
+                """);
+                }
 
-                    Array equipments = connection.createArrayOf("TEXT", dto.getEquipmentsArray().toArray());
-                    pstmt.setArray(2, equipments);
+                String sql = sqlBuilder.toString();
 
-                    pstmt.setDouble(3, dto.getMinLength());
-                    pstmt.setDouble(4, dto.getMaxLength());
-                    pstmt.setDouble(5, dto.getMinPricePerDay());
-                    pstmt.setDouble(6, dto.getMaxPricePerDay());
-                    pstmt.setInt(7, dto.getMinCapacity());
-                    pstmt.setInt(8, dto.getMaxCapacity());
-                    pstmt.setDouble(9, dto.getMinEnginePower());
-                    pstmt.setDouble(10, dto.getMaxEnginePower());
-                    pstmt.setInt(11, dto.getMinCabinsNumber());
-                    pstmt.setInt(12, dto.getMaxCabinsNumber());
+                PreparedStatement pstmt = connection.prepareStatement(sql);
 
-                    pstmt.setDate(13, Date.valueOf(dto.getManufacturerStartDate()));
-                    pstmt.setDate(14, Date.valueOf(dto.getManufacturerEndDate()));
+                pstmt.setDouble(1, dto.getMinLength());
+                pstmt.setDouble(2, dto.getMaxLength());
+                pstmt.setDouble(3, dto.getMinPricePerDay());
+                pstmt.setDouble(4, dto.getMaxPricePerDay());
+                pstmt.setInt(5, dto.getMinCapacity());
+                pstmt.setInt(6, dto.getMaxCapacity());
+                pstmt.setDouble(7, dto.getMinEnginePower());
+                pstmt.setDouble(8, dto.getMaxEnginePower());
+                pstmt.setInt(9, dto.getMinCabinsNumber());
+                pstmt.setInt(10, dto.getMaxCabinsNumber());
+                pstmt.setInt(11, dto.getManufacturerStartDate());
+                pstmt.setInt(12, dto.getManufacturerEndDate());
 
-                    ResultSet rs = pstmt.executeQuery();
-                    while (rs.next()) {
-                        System.out.println("Boat ID: " + rs.getInt("id"));
-                        System.out.println("Category UUID: " + rs.getString("uuid"));
-                    }
+                int paramIndex = 13;
+                if (!dto.getCategoryUuids().isEmpty()) {
+                    Array categoryUuidsArray = connection.createArrayOf("UUID", dto.getCategoryUuids().toArray(new UUID[0]));
+                    pstmt.setArray(paramIndex++, categoryUuidsArray);
+                }
+
+                if (!dto.getEquipmentsArray().isEmpty()) {
+                    String equipments = String.join(",", dto.getEquipmentsArray());
+                    pstmt.setString(paramIndex++, equipments);
+                }
+
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    Category category = new Category(
+                            rs.getString("category_name")
+                    );
+
+                    Boat boat = new Boat(
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getString("name"),
+                            rs.getDouble("length"),
+                            rs.getInt("capacity"),
+                            rs.getDouble("engine_power"),
+                            rs.getDouble("price_per_day"),
+                            category
+                    );
+
+                    boats.add(boat);
+                }
 
             }
         } catch (SQLException error) {
-            System.out.println("Exception on getting boats boats: " + error);
+            System.out.println("Exception on getting filtered boats: " + error);
         }
 
         return boats;
-
-
     }
+
 }
