@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class FindBoatsByFilterDTO {
+    private String boatName;
     private ArrayList<UUID> categoryUuids;
     private ArrayList<String> equipmentsArray;
     private double minLength;
@@ -23,7 +24,8 @@ public class FindBoatsByFilterDTO {
     public FindBoatsByFilterDTO() {
     }
 
-    public FindBoatsByFilterDTO(ArrayList<UUID> categoryUuids, ArrayList<String> equipmentsArray, double minLength, double minPricePerDay, double minPrice, double maxPricePerDay, int minCapacity, int maxCapacity, double minEnginePower, double maxEnginePower, int minCabinsNumber, int maxCabinsNumber, int manufacturerStartDate, int manufacturerEndDate) {
+    public FindBoatsByFilterDTO(String boatName, ArrayList<UUID> categoryUuids, ArrayList<String> equipmentsArray, double minLength, double minPricePerDay, double minPrice, double maxPricePerDay, int minCapacity, int maxCapacity, double minEnginePower, double maxEnginePower, int minCabinsNumber, int maxCabinsNumber, int manufacturerStartDate, int manufacturerEndDate) {
+        this.boatName = boatName;
         this.categoryUuids = categoryUuids;
         this.equipmentsArray = equipmentsArray;
         this.minLength = minLength;
@@ -38,6 +40,14 @@ public class FindBoatsByFilterDTO {
         this.maxCabinsNumber = maxCabinsNumber;
         this.manufacturerStartDate = manufacturerStartDate;
         this.manufacturerEndDate = manufacturerEndDate;
+    }
+
+    public String getBoatName() {
+        return boatName;
+    }
+
+    public void setBoatName(String boatName) {
+        this.boatName = boatName;
     }
 
     public ArrayList<UUID> getCategoryUuids() {
@@ -155,7 +165,8 @@ public class FindBoatsByFilterDTO {
     @Override
     public String toString() {
         return "FindBoatsByFilterDTO{" +
-                "categoryUuids=" + categoryUuids +
+                "boatName='" + boatName + '\'' +
+                ", categoryUuids=" + categoryUuids +
                 ", equipmentsArray=" + equipmentsArray +
                 ", minLength=" + minLength +
                 ", maxLength=" + maxLength +

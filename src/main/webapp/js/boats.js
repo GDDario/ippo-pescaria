@@ -76,6 +76,10 @@ function loadFilters() {
     });
 }
 
+function onBoatNameSearch(e) {
+    console.log(document.getElementById('boat-name').value)
+}
+
 function displayCategories(categories) {
   const categoriesContainer = document.getElementById("categories");
 
@@ -369,6 +373,7 @@ function getFilters() {
   return {
     categoryUuids: categoriesArray,
     equipmentsArray: equipmentsArray,
+    "boatName": document.querySelector('#boat-name').value,
     "minLength": boatLengthContainer.querySelector('#minimum-boat-length').value,
     "maxLength": boatLengthContainer.querySelector('#maximum-boat-length').value,
     "minPricePerDay": pricePerDayContainer.querySelector('#minimum-price-per-day').value,

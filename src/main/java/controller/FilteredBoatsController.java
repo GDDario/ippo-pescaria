@@ -14,10 +14,10 @@ import model.Boat;
 import service.BoatsService;
 import util.DateUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author acer
@@ -45,6 +45,7 @@ public class FilteredBoatsController extends HttpServlet {
         String categoryUuids = request.getParameter("categoryUuids").trim();
         String equipmentsArray = request.getParameter("equipmentsArray").trim();
 
+        String boatName = request.getParameter("boatName");
         double minLength = Double.parseDouble(request.getParameter("minLength"));
         double maxLength = Double.parseDouble(request.getParameter("maxLength"));
         double minPricePerDay = Double.parseDouble(request.getParameter("minPricePerDay"));
@@ -85,6 +86,7 @@ public class FilteredBoatsController extends HttpServlet {
         }
 
         FindBoatsByFilterDTO filterDTO = new FindBoatsByFilterDTO(
+                boatName,
                 categoryUuidList,
                 equipmentsList,
                 minLength,

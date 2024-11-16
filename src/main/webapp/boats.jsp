@@ -34,7 +34,20 @@
        <div class="col-2 no-select scrollable">
          <h4 class="d-flex align-items-center gap-2">Filtros <i class="bi bi-funnel-fill"></i></h4>
 
-         <div id="categories" class="mt-4">
+         <div class="mt-2">
+            <div class="form-group">
+              <label for="boat-name" class="col-form-label">Nome</label>
+              <input
+                type="text"
+                name="boat-name"
+                class="form-control"
+                id="boat-name"
+                onkeyup="loadFilteredBoats()"
+              >
+            </div>
+         </div>
+
+         <div class="mt-4" id="categories">
             <h5>Tipos de barco</h5>
          </div>
 

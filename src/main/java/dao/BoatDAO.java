@@ -118,7 +118,8 @@ public class BoatDAO {
                 FROM boats
                 JOIN categories ON categories.id = boats.category_id
                 WHERE
-                    length >= ? AND length <= ?
+                    boats.name LIKE ?
+                    AND length >= ? AND length <= ?
                     AND price_per_day >= ? AND price_per_day <= ?
                     AND capacity >= ? AND capacity <= ?
                     AND engine_power >= ? AND engine_power <= ?
@@ -147,20 +148,21 @@ public class BoatDAO {
 
                 PreparedStatement pstmt = connection.prepareStatement(sql);
 
-                pstmt.setDouble(1, dto.getMinLength());
-                pstmt.setDouble(2, dto.getMaxLength());
-                pstmt.setDouble(3, dto.getMinPricePerDay());
-                pstmt.setDouble(4, dto.getMaxPricePerDay());
-                pstmt.setInt(5, dto.getMinCapacity());
-                pstmt.setInt(6, dto.getMaxCapacity());
-                pstmt.setDouble(7, dto.getMinEnginePower());
-                pstmt.setDouble(8, dto.getMaxEnginePower());
-                pstmt.setInt(9, dto.getMinCabinsNumber());
-                pstmt.setInt(10, dto.getMaxCabinsNumber());
-                pstmt.setInt(11, dto.getManufacturerStartDate());
-                pstmt.setInt(12, dto.getManufacturerEndDate());
+                pstmt.setString(1, dto.getBoatName() + "%");
+                pstmt.setDouble(2, dto.getMinLength());
+                pstmt.setDouble(3, dto.getMaxLength());
+                pstmt.setDouble(4, dto.getMinPricePerDay());
+                pstmt.setDouble(5, dto.getMaxPricePerDay());
+                pstmt.setInt(6, dto.getMinCapacity());
+                pstmt.setInt(7, dto.getMaxCapacity());
+                pstmt.setDouble(8, dto.getMinEnginePower());
+                pstmt.setDouble(9, dto.getMaxEnginePower());
+                pstmt.setInt(10, dto.getMinCabinsNumber());
+                pstmt.setInt(11, dto.getMaxCabinsNumber());
+                pstmt.setInt(12, dto.getManufacturerStartDate());
+                pstmt.setInt(13, dto.getManufacturerEndDate());
 
-                int paramIndex = 13;
+                int paramIndex = 14;
                 if (!dto.getCategoryUuids().isEmpty()) {
                     Array categoryUuidsArray = connection.createArrayOf("UUID", dto.getCategoryUuids().toArray(new UUID[0]));
                     pstmt.setArray(paramIndex++, categoryUuidsArray);
