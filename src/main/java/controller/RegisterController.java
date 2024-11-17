@@ -72,7 +72,6 @@ public class RegisterController extends HttpServlet {
             request.getSession().setAttribute("passwordConfirmationError", e.getMessage());
         }
 
-        System.out.println("AQUIQUIQUIUQIUS");
         // Redireciona para index bckp.jsp em caso de erro ou exceção
         response.sendRedirect("index.jsp?openRegisterModal=true");
     }

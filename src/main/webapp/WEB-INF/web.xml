@@ -24,6 +24,16 @@
         <servlet-class>controller.HotBoatsController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>FiltersController</servlet-name>
+        <servlet-class>controller.FiltersController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>FilteredBoatsController</servlet-name>
+        <servlet-class>controller.FilteredBoatsController</servlet-class>
+    </servlet>
+
     <!-- Mapping -->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -45,7 +55,17 @@
         <url-pattern>/HotBoatsController</url-pattern>
     </servlet-mapping>
 
-    <!-- Configuratopm -->
+    <servlet-mapping>
+        <servlet-name>FiltersController</servlet-name>
+        <url-pattern>/FiltersController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FilteredBoatsController</servlet-name>
+        <url-pattern>/FilteredBoatsController</url-pattern>
+    </servlet-mapping>
+
+    <!-- Configuration -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
