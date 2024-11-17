@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class FindBoatsByFilterDTO {
+    private String boatName;
     private ArrayList<UUID> categoryUuids;
     private ArrayList<String> equipmentsArray;
     private double minLength;
@@ -17,13 +18,14 @@ public class FindBoatsByFilterDTO {
     private double maxEnginePower;
     private int minCabinsNumber;
     private int maxCabinsNumber;
-    private LocalDate manufacturerStartDate = LocalDate.of(1500, 1, 1);
-    private LocalDate manufacturerEndDate = LocalDate.now();
+    private int manufacturerStartDate;
+    private int manufacturerEndDate;
 
     public FindBoatsByFilterDTO() {
     }
 
-    public FindBoatsByFilterDTO(ArrayList<UUID> categoryUuids, ArrayList<String> equipmentsArray, double minLength, double minPricePerDay, double minPrice, double maxPricePerDay, int minCapacity, int maxCapacity, double minEnginePower, double maxEnginePower, int minCabinsNumber, int maxCabinsNumber, LocalDate manufacturerStartDate, LocalDate manufacturerEndDate) {
+    public FindBoatsByFilterDTO(String boatName, ArrayList<UUID> categoryUuids, ArrayList<String> equipmentsArray, double minLength, double minPricePerDay, double minPrice, double maxPricePerDay, int minCapacity, int maxCapacity, double minEnginePower, double maxEnginePower, int minCabinsNumber, int maxCabinsNumber, int manufacturerStartDate, int manufacturerEndDate) {
+        this.boatName = boatName;
         this.categoryUuids = categoryUuids;
         this.equipmentsArray = equipmentsArray;
         this.minLength = minLength;
@@ -38,6 +40,14 @@ public class FindBoatsByFilterDTO {
         this.maxCabinsNumber = maxCabinsNumber;
         this.manufacturerStartDate = manufacturerStartDate;
         this.manufacturerEndDate = manufacturerEndDate;
+    }
+
+    public String getBoatName() {
+        return boatName;
+    }
+
+    public void setBoatName(String boatName) {
+        this.boatName = boatName;
     }
 
     public ArrayList<UUID> getCategoryUuids() {
@@ -136,19 +146,40 @@ public class FindBoatsByFilterDTO {
         this.maxCabinsNumber = maxCabinsNumber;
     }
 
-    public LocalDate getManufacturerStartDate() {
+    public int getManufacturerStartDate() {
         return manufacturerStartDate;
     }
 
-    public void setManufacturerStartDate(LocalDate manufacturerStartDate) {
+    public void setManufacturerStartDate(int manufacturerStartDate) {
         this.manufacturerStartDate = manufacturerStartDate;
     }
 
-    public LocalDate getManufacturerEndDate() {
+    public int getManufacturerEndDate() {
         return manufacturerEndDate;
     }
 
-    public void setManufacturerEndDate(LocalDate manufacturerEndDate) {
+    public void setManufacturerEndDate(int manufacturerEndDate) {
         this.manufacturerEndDate = manufacturerEndDate;
+    }
+
+    @Override
+    public String toString() {
+        return "FindBoatsByFilterDTO{" +
+                "boatName='" + boatName + '\'' +
+                ", categoryUuids=" + categoryUuids +
+                ", equipmentsArray=" + equipmentsArray +
+                ", minLength=" + minLength +
+                ", maxLength=" + maxLength +
+                ", minPricePerDay=" + minPricePerDay +
+                ", maxPricePerDay=" + maxPricePerDay +
+                ", minCapacity=" + minCapacity +
+                ", maxCapacity=" + maxCapacity +
+                ", minEnginePower=" + minEnginePower +
+                ", maxEnginePower=" + maxEnginePower +
+                ", minCabinsNumber=" + minCabinsNumber +
+                ", maxCabinsNumber=" + maxCabinsNumber +
+                ", manufacturerStartDate=" + manufacturerStartDate +
+                ", manufacturerEndDate=" + manufacturerEndDate +
+                '}';
     }
 }
