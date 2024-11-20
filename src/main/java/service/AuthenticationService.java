@@ -1,8 +1,10 @@
 package service;
 
 import dao.UserDAO;
+import dto.LoginDTO;
 import dto.RegisterDTO;
 import exception.EmailAlreadyRegisteredException;
+import exception.InvalidEmailException;
 import exception.InvalidPasswordConfirmationException;
 import model.User;
 import util.DateUtil;
@@ -11,9 +13,10 @@ import vo.Email;
 
 public class AuthenticationService {
     private final UserDAO userDAO = new UserDAO();
-//    private final PasswordUtil passwordUtil = new PasswordUtil();
 
     public boolean register(RegisterDTO dto) throws InvalidPasswordConfirmationException, EmailAlreadyRegisteredException {
+        PasswordUtil passwordUtil = new PasswordUtil();
+
         if (!dto.getPassword().equals(dto.getPasswordConfirmation())) {
             throw new InvalidPasswordConfirmationException();
         }
@@ -23,20 +26,24 @@ public class AuthenticationService {
             throw new EmailAlreadyRegisteredException();
         }
 
-        System.out.println("RESULTADO TRUE BUGADO? " + emailWasRegistered);
-        System.out.println("AQUI");
-
-//        String hashedPassword = passwordUtil.hashPassword(dto.getPassword());
-
-//        System.out.println("HASHED PASSWORD: " + hashedPassword);
+        String hashedPassword = passwordUtil.hashPassword(dto.getPassword());
 
         User user = new User(
                 dto.getName(),
                 new Email(dto.getEmail()),
                 DateUtil.convertStringToLocalDate(dto.getBirthDate()),
-                dto.getPassword()
+                hashedPassword
         );
 
         return userDAO.createUser(user);
+    }
+
+    public String login(LoginDTO dto) throws InvalidEmailException {
+
+        if (!userDAO.emailWasRegistered(dto.getEmail().toString())) {
+            throw new InvalidEmailException();
+        }
+
+        return userDAO.verifyCredentials(dto);
     }
 }

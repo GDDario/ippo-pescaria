@@ -1,13 +1,14 @@
 package dao;
 
-import dto.FindBoatsByFilterDTO;
 import dto.BoatsFiltersDTO;
+import dto.FindBoatsByFilterDTO;
 import model.Boat;
 import model.Category;
 import service.DatabaseConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 public class BoatDAO {
@@ -22,7 +23,7 @@ public class BoatDAO {
                 String sql = """
                         SELECT
                         	boats.uuid, boats.name, boats.length, boats.capacity, 
-                        	boats.engine_power, boats.price_per_day, 
+                        	boats.engine_power, boats.price_per_day, boats.pictures,
                         	categories.name AS category_name
                         FROM
                         	boats
@@ -50,6 +51,7 @@ public class BoatDAO {
                             rs.getDouble("price_per_day"),
                             category
                     );
+                    boat.setPictures(convertPicturesArrayToArrayList(rs.getArray("pictures")));
 
                     boats.add(boat);
                 }
@@ -111,21 +113,21 @@ public class BoatDAO {
 
             if (connection != null) {
                 StringBuilder sqlBuilder = new StringBuilder("""
-                SELECT 
-                    boats.uuid, boats.name, boats.length, boats.capacity, 
-                    boats.engine_power, boats.price_per_day, 
-                    categories.name AS category_name
-                FROM boats
-                JOIN categories ON categories.id = boats.category_id
-                WHERE
-                    boats.name LIKE ?
-                    AND length >= ? AND length <= ?
-                    AND price_per_day >= ? AND price_per_day <= ?
-                    AND capacity >= ? AND capacity <= ?
-                    AND engine_power >= ? AND engine_power <= ?
-                    AND cabins_number >= ? AND cabins_number <= ?
-                    AND EXTRACT(YEAR FROM manufacture_date) >= ? AND EXTRACT(YEAR FROM manufacture_date) <= ?
-                """);
+                        SELECT 
+                            boats.uuid, boats.name, boats.length, boats.capacity, 
+                            boats.engine_power, boats.price_per_day, boats.pictures,
+                            categories.name AS category_name
+                        FROM boats
+                        JOIN categories ON categories.id = boats.category_id
+                        WHERE
+                            boats.name LIKE ?
+                            AND length >= ? AND length <= ?
+                            AND price_per_day >= ? AND price_per_day <= ?
+                            AND capacity >= ? AND capacity <= ?
+                            AND engine_power >= ? AND engine_power <= ?
+                            AND cabins_number >= ? AND cabins_number <= ?
+                            AND EXTRACT(YEAR FROM manufacture_date) >= ? AND EXTRACT(YEAR FROM manufacture_date) <= ?
+                        """);
 
                 if (!dto.getCategoryUuids().isEmpty()) {
                     sqlBuilder.append(" AND boats.category_id IN (SELECT id FROM categories WHERE uuid = ANY (?)) ");
@@ -133,15 +135,15 @@ public class BoatDAO {
 
                 if (!dto.getEquipmentsArray().isEmpty()) {
                     sqlBuilder.append("""
-                    AND NOT EXISTS (
-                        SELECT 1
-                        FROM unnest(string_to_array(?, ',')) AS required_equipment
-                        WHERE lower(trim(required_equipment)) NOT IN (
-                            SELECT lower(trim(equipment))
-                            FROM unnest(string_to_array(boats.equipments, ',')) AS equipment
-                        )
-                    )
-                """);
+                                AND NOT EXISTS (
+                                    SELECT 1
+                                    FROM unnest(string_to_array(?, ',')) AS required_equipment
+                                    WHERE lower(trim(required_equipment)) NOT IN (
+                                        SELECT lower(trim(equipment))
+                                        FROM unnest(string_to_array(boats.equipments, ',')) AS equipment
+                                    )
+                                )
+                            """);
                 }
 
                 String sql = sqlBuilder.toString();
@@ -188,6 +190,7 @@ public class BoatDAO {
                             rs.getDouble("price_per_day"),
                             category
                     );
+                    boat.setPictures(convertPicturesArrayToArrayList(rs.getArray("pictures")));
 
                     boats.add(boat);
                 }
@@ -200,4 +203,66 @@ public class BoatDAO {
         return boats;
     }
 
+    public Boat findByUuid(String uuid) {
+        Boat boat = new Boat();
+
+        try {
+            Connection connection = new DatabaseConnection().getConnection();
+
+            if (connection != null) {
+                String sql = """
+                            SELECT
+                                boats.*,
+                                categories.uuid as category_uuid,
+                                categories.name as category_name
+                            FROM
+                                boats
+                                INNER JOIN categories ON categories.id = boats.category_id
+                            WHERE
+                                boats.uuid = ?
+                        """;
+
+                PreparedStatement pstmt = connection.prepareStatement(sql);
+
+                pstmt.setObject(1, UUID.fromString(uuid));
+
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    Category category = new Category(
+                            rs.getString("category_name")
+                    );
+
+                    System.out.println("Entrou aqui");
+
+                    boat = new Boat(
+                            UUID.fromString(rs.getString("uuid")),
+                            rs.getString("name"),
+                            rs.getDouble("length"),
+                            rs.getInt("capacity"),
+                            rs.getDouble("engine_power"),
+                            rs.getDouble("price_per_day"),
+                            category
+                    );
+                    boat.setEquipments(rs.getString("equipments"));
+                    boat.setManufactureDate(rs.getDate("manufacture_date").toLocalDate());
+                    boat.setCabinsNumber(rs.getInt("cabins_number"));
+                    boat.setPictures(convertPicturesArrayToArrayList(rs.getArray("pictures")));
+
+                    boat.setDescription(rs.getString("description"));
+                    System.out.println("equipments " + rs.getString("equipments"));
+                }
+
+            }
+        } catch (SQLException error) {
+            System.out.println("Exception on getting filtered boats: " + error);
+        }
+
+        return boat;
+    }
+
+    private ArrayList<String> convertPicturesArrayToArrayList(Array sqlArray) throws SQLException {
+        String[] javaArray = (String[]) sqlArray.getArray();
+
+        return new ArrayList<>(Arrays.asList(javaArray));
+    }
 }

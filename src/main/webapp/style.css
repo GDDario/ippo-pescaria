@@ -243,3 +243,8 @@ a.dropdown-item:hover {
     background-color: #fff; /* Garante um fundo sólido ao rolar */
     z-index: 1000; /* Fica acima de outros elementos, se necessário */
 }
+
+.img-prev {
+    width: 300px;
+    height: 200px;
+}

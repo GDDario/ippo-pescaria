@@ -26,7 +26,7 @@ function displayBoats(boatsContainerId, boats) {
               <i class="bi bi-heart-fill position-absolute liked"></i>
               <i class="bi bi-heart position-absolute like"></i>
               <a href="/ippo-pescaria/boat.jsp?id=${boat.uuid}">
-                  <img src="images/product-1-square.jpg" class="card-img-top" alt="..."
+                  <img src="uploads/boats/${boat.pictures[0]}" class="img-prev" alt="..."
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Clique para acessar todos os dados do barco">
               </a>
               <div class="card-body cursor-text">
@@ -77,7 +77,7 @@ function loadFilters() {
 }
 
 function onBoatNameSearch(e) {
-    console.log(document.getElementById('boat-name').value)
+  console.log(document.getElementById('boat-name').value)
 }
 
 function displayCategories(categories) {
@@ -139,7 +139,7 @@ function displayRangeFields(rangeFields) {
             <div class="form-group">
               <label for="minimum-price-per-day" class="col-form-label">Minimo</label>
               <input 
-                type="number" 
+                type="number"
                 name="minimum-price-per-day" 
                 class="form-control" 
                 id="minimum-price-per-day" 
@@ -389,3 +389,74 @@ function getFilters() {
   };
 }
 
+function loadBoat() {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const id = urlParams.get('id');
+
+  fetch(`http://localhost:8080/ippo-pescaria/BoatController?id=${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then(data => {
+      displayBoat(data);
+      //      displayBoats('filtered-boats', data);
+      //      let boatsFoundText = 'Nenhum barco encontrado!';
+      //
+      //      if (data.length > 0) {
+      //        boatsFoundText = `${data.length} barcos encontrados.`;
+      //      }
+      //
+      //      document.getElementById('boats-found').innerHTML = boatsFoundText;
+    })
+    .catch(error => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+
+function displayBoat(boatData) {
+    document.getElementById("boat-category").innerHTML = boatData.category.name;
+    document.getElementById("boat-name").innerHTML = boatData.name;
+    document.getElementById("capacity-and-cabins-number").innerHTML = `Ideal para ${boatData.capacity} - ${boatData.cabinsNumber} cabines`;
+    document.getElementById("enginer-power").innerHTML = `Motor com ${boatData.enginePower}hp de potência`;
+    document.getElementById("length").innerHTML = `${boatData.length}m de comprimento`;
+    document.getElementById("price-per-day").innerHTML = `R\$ ${boatData.pricePerDay},00`;
+    document.getElementById("boat-description").innerHTML = boatData.description;
+
+    let equipments = boatData.equipments.split(",");
+    let equipmentsArray = equipments.map((equipment) => {
+        return equipment.replace(/,/g, "").trim();
+    });
+    const middle = Math.ceil(equipmentsArray.length / 2);
+    const firstHalf = equipmentsArray.slice(0, middle);
+    const secondHalf = equipmentsArray.slice(middle);
+
+    const equipmentsColumn1 = document.getElementById("equipments-1")
+    const equipmentsColumn2 = document.getElementById("equipments-2")
+
+    firstHalf.forEach((equipment) => {
+        const content = `<li class="mb-2">${equipment}</li>`;
+        equipmentsColumn1.insertAdjacentHTML('beforeend', content);
+    })
+
+    secondHalf.forEach((equipment) => {
+        const content = `<li class="mb-2">${equipment}</li>`;
+        equipmentsColumn2.insertAdjacentHTML('beforeend', content);
+    })
+
+    document.getElementById("boat-img-1").src = "uploads/boats/" + boatData.pictures[0];
+    document.getElementById("boat-img-2").src = "uploads/boats/" + boatData.pictures[1];
+    document.getElementById("boat-img-3").src = "uploads/boats/" + boatData.pictures[2];
+    document.getElementById("boat-img-4").src = "uploads/boats/" + boatData.pictures[3];
+
+    console.log(equipmentsArray);
+    console.log(boatData);
+}

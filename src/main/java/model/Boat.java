@@ -3,6 +3,7 @@ package model;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Boat {
@@ -20,6 +21,8 @@ public class Boat {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Category category;
+    private String description;
+    public ArrayList<String> pictures;
 
     public Boat() {
     }
@@ -164,6 +167,22 @@ public class Boat {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ArrayList<String> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(ArrayList<String> pictures) {
+        this.pictures = pictures;
     }
 }
 

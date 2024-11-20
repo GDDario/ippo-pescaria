@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Boat;
 import service.BoatsService;
+import util.DateUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 /**
  * @author acer
  */
-public class HotBoatsController extends HttpServlet {
+public class BoatController extends HttpServlet {
     private final BoatsService service = new BoatsService();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = DateUtil.configureObjectMapper();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -35,8 +36,13 @@ public class HotBoatsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("application/json");
 
-        ArrayList<Boat> categories = this.service.getHotBoats();
-        String json = objectMapper.writeValueAsString(categories);
+        if (request.getParameter("id") == null) {
+            request.getSession().setAttribute("genericError", "O id é necessário para carregar os dados de um barco.");
+            response.sendRedirect("index.jsp");
+        }
+
+        Boat boat = this.service.getBoatByUuid(request.getParameter("id"));
+        String json = objectMapper.writeValueAsString(boat);
 
         response.getWriter().write(json);
     }
