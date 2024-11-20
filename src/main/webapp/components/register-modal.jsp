@@ -60,7 +60,6 @@
   </div>
 </div>
 
-
 <script>
     function checkModalParameter() {
         const urlParams = new URLSearchParams(window.location.search);

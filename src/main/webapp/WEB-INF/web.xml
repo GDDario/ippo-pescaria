@@ -10,6 +10,11 @@
     </servlet>
 
     <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>controller.LoginController</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>ClearSessionAttributesServlet</servlet-name>
         <servlet-class>controller.ClearSessionAttributesServlet</servlet-class>
     </servlet>
@@ -34,10 +39,20 @@
         <servlet-class>controller.FilteredBoatsController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>BoatController</servlet-name>
+        <servlet-class>controller.BoatController</servlet-class>
+    </servlet>
+
     <!-- Mapping -->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
         <url-pattern>/RegisterController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -63,6 +78,11 @@
     <servlet-mapping>
         <servlet-name>FilteredBoatsController</servlet-name>
         <url-pattern>/FilteredBoatsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BoatController</servlet-name>
+        <url-pattern>/BoatController</url-pattern>
     </servlet-mapping>
 
     <!-- Configuration -->

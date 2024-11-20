@@ -1,7 +1,9 @@
 package dao;
 
+import dto.LoginDTO;
 import model.User;
 import service.DatabaseConnection;
+import util.PasswordUtil;
 
 import java.sql.*;
 
@@ -35,6 +37,49 @@ public class UserDAO {
         } catch (SQLException erro) {
             System.out.println("Exceção causada na inserção: " + erro);
             return false;
+        }
+    }
+
+    public String verifyCredentials(LoginDTO dto) {
+        PasswordUtil passwordUtil = new PasswordUtil();
+        String name = "";
+
+        try {
+            Connection con = new DatabaseConnection().getConnection();
+
+            if (con != null) {
+                PreparedStatement ps;
+                String sql = """
+                            SELECT
+                            	password, name
+                            FROM
+                            	"users"
+                            WHERE
+                                email = ?
+                            LIMIT
+                            	1;
+                        """;
+                ps = con.prepareStatement(sql);
+                ps.setString(1, dto.getEmail().toString());
+
+                ResultSet rs = ps.executeQuery();
+                String passwordHash = "";
+
+                while (rs.next()) {
+                    passwordHash = rs.getString("password");
+
+                    if (passwordUtil.verifyPassword(dto.getPassword(), passwordHash)) {
+                        name = rs.getString("name");
+                    }
+                }
+
+                return name;
+            } else {
+                return name;
+            }
+        } catch (SQLException error) {
+            System.out.println("Exception on verifying if email was registered: " + error);
+            return name;
         }
     }
 

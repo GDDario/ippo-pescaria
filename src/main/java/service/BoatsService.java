@@ -42,4 +42,11 @@ public class BoatsService {
 
         return boatsList;
     }
+
+
+    public Boat getBoatByUuid(String uuid) {
+        Boat boat = this.dao.findByUuid(uuid);
+
+        return boat;
+    }
 }
