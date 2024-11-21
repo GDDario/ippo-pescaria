@@ -4,21 +4,23 @@ import dto.LoginDTO;
 import model.User;
 import service.DatabaseConnection;
 import util.PasswordUtil;
+import vo.Email;
 
 import java.sql.*;
 
 public class UserDAO {
-    public boolean createUser(User user) {
+    public User createUser(User user) {
         try {
             Connection connection = new DatabaseConnection().getConnection();
 
             if (connection != null) {
                 PreparedStatement ps;
                 String sql = """
-                        INSERT INTO "users" 
-                             (name, email, password, birth_date) 
-                        VALUES (?, ?, ?, ?)
-                        """;
+                    INSERT INTO "users" 
+                        (name, email, password, birth_date) 
+                    VALUES (?, ?, ?, ?)
+                    RETURNING id, name, email, password, birth_date, created_at, updated_at, deleted_at
+                    """;
 
                 ps = connection.prepareStatement(sql);
                 ps.setString(1, user.getName());
@@ -26,23 +28,35 @@ public class UserDAO {
                 ps.setString(3, user.getPassword());
                 ps.setDate(4, Date.valueOf(user.getBirthDate()));
 
-                if (ps.executeUpdate() != 0) {
-                    return true;
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    // Mapeando o resultado para o modelo User
+                    User createdUser = new User();
+                    createdUser.setId(rs.getInt("id"));
+                    createdUser.setName(rs.getString("name"));
+                    createdUser.setEmail(new Email(rs.getString("email")));
+                    createdUser.setBirthDate(rs.getDate("birth_date").toLocalDate());
+                    createdUser.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                    createdUser.setUpdatedAt(rs.getTimestamp("updated_at") != null ? rs.getTimestamp("updated_at").toLocalDateTime() : null);
+                    createdUser.setDeletedAt(rs.getTimestamp("deleted_at") != null ? rs.getTimestamp("deleted_at").toLocalDateTime() : null);
+
+                    return createdUser;
                 } else {
-                    return false;
+                    return null;
                 }
             } else {
-                return false;
+                return null;
             }
         } catch (SQLException erro) {
             System.out.println("Exceção causada na inserção: " + erro);
-            return false;
+            return null;
         }
     }
 
-    public String verifyCredentials(LoginDTO dto) {
+    public User verifyCredentials(LoginDTO dto) {
         PasswordUtil passwordUtil = new PasswordUtil();
-        String name = "";
+        User user = new User();
 
         try {
             Connection con = new DatabaseConnection().getConnection();
@@ -51,7 +65,7 @@ public class UserDAO {
                 PreparedStatement ps;
                 String sql = """
                             SELECT
-                            	password, name
+                            	password, name, id
                             FROM
                             	"users"
                             WHERE
@@ -69,17 +83,18 @@ public class UserDAO {
                     passwordHash = rs.getString("password");
 
                     if (passwordUtil.verifyPassword(dto.getPassword(), passwordHash)) {
-                        name = rs.getString("name");
+                        user.setName(rs.getString("name"));
+                        user.setId(rs.getInt("id"));
                     }
                 }
 
-                return name;
+                return user;
             } else {
-                return name;
+                return user;
             }
         } catch (SQLException error) {
-            System.out.println("Exception on verifying if email was registered: " + error);
-            return name;
+            System.out.println("Exception on verifying credentials was registered: " + error);
+            return user;
         }
     }
 

@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 import service.AuthenticationService;
 
 import java.io.IOException;
@@ -43,18 +44,25 @@ public class RegisterController extends HttpServlet {
             System.out.println("password " + request.getParameter("password"));
             System.out.println("password-confirmation " + request.getParameter("password-confirmation"));
 
-            boolean serviceResponse = authenticationService.register(registerDTO);
+            User serviceResponse = authenticationService.register(registerDTO);
 
-            if (!serviceResponse) {
+
+            if (serviceResponse.getName().isEmpty()) {
                 request.getSession().setAttribute("genericError", "Não foi possível realizar o cadastro.");
+                response.sendRedirect("index.jsp?openRegisterModal=true");
+                return;
             }
 
             HttpSession session = request.getSession();
 
-            session.setAttribute("username", request.getParameter("name"));
+            System.out.println("??");
+            System.out.println(serviceResponse.getId());
+            System.out.println(serviceResponse.getName());
+            session.setAttribute("id", serviceResponse.getId());
+            session.setAttribute("name", serviceResponse.getName());
             session.setAttribute("isLoggedIn", true);
 
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("index.jsp?success=true");
             return;
 
         } catch (EmailAlreadyRegisteredException | IllegalArgumentException e) {

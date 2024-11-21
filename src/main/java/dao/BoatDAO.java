@@ -232,8 +232,6 @@ public class BoatDAO {
                             rs.getString("category_name")
                     );
 
-                    System.out.println("Entrou aqui");
-
                     boat = new Boat(
                             UUID.fromString(rs.getString("uuid")),
                             rs.getString("name"),
@@ -249,7 +247,6 @@ public class BoatDAO {
                     boat.setPictures(convertPicturesArrayToArrayList(rs.getArray("pictures")));
 
                     boat.setDescription(rs.getString("description"));
-                    System.out.println("equipments " + rs.getString("equipments"));
                 }
 
             }
