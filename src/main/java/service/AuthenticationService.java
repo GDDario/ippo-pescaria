@@ -14,7 +14,7 @@ import vo.Email;
 public class AuthenticationService {
     private final UserDAO userDAO = new UserDAO();
 
-    public boolean register(RegisterDTO dto) throws InvalidPasswordConfirmationException, EmailAlreadyRegisteredException {
+    public User register(RegisterDTO dto) throws InvalidPasswordConfirmationException, EmailAlreadyRegisteredException {
         PasswordUtil passwordUtil = new PasswordUtil();
 
         if (!dto.getPassword().equals(dto.getPasswordConfirmation())) {
@@ -38,7 +38,7 @@ public class AuthenticationService {
         return userDAO.createUser(user);
     }
 
-    public String login(LoginDTO dto) throws InvalidEmailException {
+    public User login(LoginDTO dto) throws InvalidEmailException {
 
         if (!userDAO.emailWasRegistered(dto.getEmail().toString())) {
             throw new InvalidEmailException();

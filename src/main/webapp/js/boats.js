@@ -67,17 +67,12 @@ function loadFilters() {
     .then(data => {
       displayCategories(data.categoriesList);
       displayEquipments(data.equipmentsList);
-      console.log('Response', data);
       displayRangeFields(data.boatsFiltersDTO);
       //                displayBoats('hot-boats', data);
     })
     .catch(error => {
       console.error("There was a problem with the fetch operation:", error);
     });
-}
-
-function onBoatNameSearch(e) {
-  console.log(document.getElementById('boat-name').value)
 }
 
 function displayCategories(categories) {
@@ -314,7 +309,6 @@ function displayRangeFields(rangeFields) {
 function loadFilteredBoats() {
   document.getElementById('filtered-boats').replaceChildren();
   const filters = getFilters();
-  console.log('Filters', filters);
   document.getElementById('boats-found').innerHTML = 'Carregando ...';
 
   const formData = new URLSearchParams(filters).toString();
@@ -456,7 +450,4 @@ function displayBoat(boatData) {
     document.getElementById("boat-img-2").src = "uploads/boats/" + boatData.pictures[1];
     document.getElementById("boat-img-3").src = "uploads/boats/" + boatData.pictures[2];
     document.getElementById("boat-img-4").src = "uploads/boats/" + boatData.pictures[3];
-
-    console.log(equipmentsArray);
-    console.log(boatData);
 }

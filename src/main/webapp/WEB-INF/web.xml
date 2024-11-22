@@ -44,6 +44,16 @@
         <servlet-class>controller.BoatController</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>UnavailableRentsController</servlet-name>
+        <servlet-class>controller.UnavailableRentsController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>RentController</servlet-name>
+        <servlet-class>controller.RentController</servlet-class>
+    </servlet>
+
     <!-- Mapping -->
     <servlet-mapping>
         <servlet-name>RegisterController</servlet-name>
@@ -83,6 +93,16 @@
     <servlet-mapping>
         <servlet-name>BoatController</servlet-name>
         <url-pattern>/BoatController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UnavailableRentsController</servlet-name>
+        <url-pattern>/UnavailableRentsController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RentController</servlet-name>
+        <url-pattern>/RentController</url-pattern>
     </servlet-mapping>
 
     <!-- Configuration -->

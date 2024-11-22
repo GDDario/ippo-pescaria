@@ -33,22 +33,22 @@
       <div class="carousel-item active" data-bs-interval="3000">
         <img src="img/carousel/carousel-1.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
-          <h5>Ferias nesse verao?</h5>
-          <p>Confira nossa frota selecionada para o verao de 2025</p>
+          <h5>Férias nesse verão?</h5>
+          <p>Confira nossa frota selecionada para o verão de 2025</p>
         </div>
       </div>
       <div class="carousel-item" data-bs-interval="3000">
         <img src="img/carousel/carousel-2.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Nova sede</h5>
-          <p>Conheca nossa sede em Veneza - Italia</p>
+          <p>Conheça nossa sede em Veneza - Italia</p>
         </div>
       </div>
       <div class="carousel-item" data-bs-interval="3000">
         <img src="img/carousel/carousel-3.jpg" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h5>Barcos parados?</h5>
-          <p>Conheca nosso plano especial de terceirizacao de frota</p>
+          <p>Conheça nosso plano especial de terceirizacao de frota</p>
         </div>
       </div>
     </div>
@@ -71,31 +71,11 @@
   </div>
   
   <%@ include file="/components/footer.jsp" %>
+
+  <script src="app.js"></script>
+  
   <%@ include file="/components/toast.jsp" %>
 
-  <!-- Modal -->
-  <%-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          You will need to Login of Check your account.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a type="button" href="login.html" class="btn btn-primary">Go To Login</a>
-        </div>
-      </div>
-    </div>
-  </div>
-   --%>
-  <!-- End of Modal -->
-  <script src="app.js"></script>
-
-    <div id="boats-container"></div>
 </body>
 
 </html>

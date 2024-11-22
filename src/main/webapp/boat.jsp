@@ -2,40 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!-- CSS only -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <!-- JavaScript Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-      crossorigin="anonymous"
-    ></script>
-    <script src="js/boats.js"></script>
-  </head>
+  <%@ include file="/util/head.jsp" %>
+
   <body onload="loadBoat()">
     <%@ include file="/components/header.jsp" %>
+    <%@ include file="/components/rent-modal.jsp" %>
 
-    <%-- <nav aria-label="breadcrumb">
-      <ol class="breadcrumb p-3">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Camera</a></li>
-        <li class="breadcrumb-item active" aria-current="page">MX-5</li>
-      </ol>
-    </nav> --%>
     <div class="container mb-5 mt-5">
         <div class="row d-flex flex-row">
             <div class="col-md-5 product-image">
@@ -57,10 +29,21 @@
                 <div class="text-secondary text-small">Aluguel ao dia</div>
                 <h5 id="price-per-day" class="text-secondary fs-4 fw-bold">R$ 100,00</h4>
 
-                <button class="btn btn-dark w-100 my-5" onclick="showToast()">
+                 <%
+                    if (session.getAttribute("isLoggedIn") != null) {
+                %>
+                <button class="btn btn-dark w-100 my-5" data-bs-toggle="modal" data-bs-target="#rent-modal">
                     Alugar
                 </button>
-
+                <%
+                    } else {
+                %>
+                <button class="btn btn-dark w-100 my-5" data-bs-toggle="modal" data-bs-target="#login-modal">
+                    Alugar
+                </button>
+                <%
+                }
+                %>
             </div>
         </div>
 
