@@ -1,13 +1,16 @@
-<div class="footer mt-auto bg-dark text-light">
+<footer class="footer mt-auto bg-dark text-light">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <div class="container py-3">
         <div class="row d-flex footer-items">
             <div class="col-lg-4">
                 <h5>Mapa do site</h5>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Barcos</a></li>
-                    <li><a href="#">Sobre a empresa</a></li>
-                    <li><a href="#">Contato</a></li>
+                    <li><a href="/ippo-pescaria">Home</a></li>
+                    <li><a href="/ippo-pescaria/boats.jsp">Barcos</a></li>
+                    <li><a href="/ippo-pescaria/about.jsp">Sobre a empresa</a></li>
+                    <li><a href="/ippo-pescaria/contact.html">Contato</a></li>
                 </ul>
                 </div>
             <div class="col-lg-4">
@@ -43,4 +46,6 @@
         <span>@Ippo Pescaria</span>
       </div>
     </div>
-</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

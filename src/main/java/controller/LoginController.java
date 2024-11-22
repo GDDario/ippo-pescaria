@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 import service.AuthenticationService;
 import vo.Email;
 
@@ -34,19 +35,20 @@ public class LoginController extends HttpServlet {
             System.out.println("Email " + request.getParameter("email"));
             System.out.println("Password " + request.getParameter("password"));
 
-            String serviceResponse = authenticationService.login(loginDTO);
+            User serviceResponse = authenticationService.login(loginDTO);
 
-            if (serviceResponse.isEmpty()) {
+            if (serviceResponse.getName().isEmpty()) {
                 request.getSession().setAttribute("genericError", "Não foi possível realizar o login.");
 
                 response.sendRedirect("index.jsp?openLoginModal=true");
             } else {
                 HttpSession session = request.getSession();
 
-                session.setAttribute("username", serviceResponse);
+                session.setAttribute("id", serviceResponse.getId());
+                session.setAttribute("name", serviceResponse.getName());
                 session.setAttribute("isLoggedIn", true);
 
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("index.jsp?login_success=true");
             }
 
         } catch (IllegalArgumentException | InvalidEmailException e){

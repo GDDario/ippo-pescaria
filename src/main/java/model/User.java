@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class User {
+    private int id;
     private String name;
     private Email email;
     private String password;
@@ -30,7 +31,21 @@ public class User {
         this.deletedAt = deletedAt;
     }
 
+    public User(int id, String name, String password) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+    }
+
     public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

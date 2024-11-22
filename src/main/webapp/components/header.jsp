@@ -34,11 +34,12 @@
 
             <div class="order-sm-last">
                 <%
-                    if (session.getAttribute("username") != null) {
+                    if (session.getAttribute("isLoggedIn") != null) {
                 %>
-                    <form method="post" action="LogoutController" name="logout-form">
+                    <form method="post" action="LogoutController" name="logout-form" class="d-flex gap-4 align-items-center">
+                        <div style="color: white;"><%= session.getAttribute("name") %></div>
                         <button type="submit" class="btn btn-danger">
-                            Logout
+                            Sair
                         </button>
                     </form>
                 <%
