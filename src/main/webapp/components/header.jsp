@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/contact.html" tabindex="-1">
+                    <a class="nav-link" href="/ippo-pescaria/contact.jsp" tabindex="-1">
                         Contato
                     </a>
                 </li>
