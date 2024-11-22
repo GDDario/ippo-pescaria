@@ -42,12 +42,21 @@
     </dependency>
 
     <dependency>
+     <groupId>jakarta.servlet</groupId>
+     <artifactId>jakarta.servlet-api</artifactId>
+     <version>5.0.0</version> <!-- Ajuste conforme necessário -->
+     <scope>provided</scope>
+  </dependency>
+
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>5.11.3</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  
 
   <build>
     <finalName>ippo-pescaria</finalName>

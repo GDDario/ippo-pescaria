@@ -88,7 +88,7 @@
   <div class="form-background">
     <div class="container">
       <h1>Contato</h1>
-      <form action="#" method="post">
+      <form action="contact" method="post">
         <div class="form-group">
           <label for="name">Nome:</label>
           <input type="text" id="name" name="name" placeholder="Digite seu nome">
