@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+
 <%@ include file="/components/register-modal.jsp" %>
 <%@ include file="/components/login-modal.jsp" %>
 
@@ -38,6 +40,11 @@
                 %>
                     <form method="post" action="LogoutController" name="logout-form" class="d-flex gap-4 align-items-center">
                         <div style="color: white;"><%= session.getAttribute("name") %></div>
+
+                        <a type="button" class="btn btn-primary" href="/ippo-pescaria/my-rents.jsp">
+                            Seus aluguéis
+                        </a>
+
                         <button type="submit" class="btn btn-danger">
                             Sair
                         </button>
@@ -46,8 +53,8 @@
                     } else {
                 %>
                     <div class="d-flex gap-1">
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#login-modal">Login</a>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#register-modal">Cadastre-se</a>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login-modal">Login</button>
+                        <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#register-modal">Cadastre-se</button>
                     <div>
                 <%
                     }

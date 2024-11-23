@@ -1,6 +1,8 @@
 package dao;
 
 import dto.RentDateRangeDTO;
+import dto.UserRentDTO;
+import model.Category;
 import service.DatabaseConnection;
 
 import java.sql.*;
@@ -94,5 +96,62 @@ public class RentDAO {
             System.out.println("Exceção causada na inserção: " + erro);
             return false;
         }
+    }
+
+    public ArrayList<UserRentDTO> findByUserId(int userId) {
+        ArrayList<UserRentDTO> rents = new ArrayList<>();
+
+        try {
+            Connection connection = new DatabaseConnection().getConnection();
+
+            if (connection != null) {
+                PreparedStatement ps;
+                String sql = """
+                        SELECT
+                            rents.id,
+                            boats.name as boat_name,
+                            -- Days count (date_start - date_end + 1)
+                            rents.date_start,
+                            rents.date_end,
+                            rents.total,
+                            rents.created_at
+                        FROM
+                            rents
+                            INNER JOIN boats ON boats.id = rents.boat_id
+                         WHERE
+                            rents.user_id = ?
+                        """;
+
+                ps = connection.prepareStatement(sql);
+                ps.setInt(1, userId);
+
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    long daysRented = ChronoUnit.DAYS.between(
+                            rs.getDate("date_start").toLocalDate(),
+                            rs.getDate("date_end").toLocalDate()
+                    ) + 1;
+
+                    daysRented = Math.max(daysRented, 1);
+
+                    UserRentDTO dto = new UserRentDTO(
+                            rs.getInt("id"),
+                            rs.getString("boat_name"),
+                            (int) daysRented,
+                            rs.getDate("date_start").toLocalDate(),
+                            rs.getDate("date_end").toLocalDate(),
+                            rs.getDouble("total"),
+                            rs.getTimestamp("created_at").toLocalDateTime()
+                    );
+
+                    rents.add(dto);
+                }
+            }
+        } catch (SQLException error) {
+            System.out.println("Exception on getting categories for filter: " + error);
+        }
+
+        return rents;
     }
 }
