@@ -2,6 +2,7 @@ package service;
 
 import dao.RentDAO;
 import dto.RentDateRangeDTO;
+import dto.UserRentDTO;
 
 import java.util.ArrayList;
 
@@ -16,5 +17,9 @@ public class RentService {
 
     public boolean registerRent(RentDateRangeDTO dto, String description, int userId, String boatUuid) {
         return this.dao.create(dto, description, userId, boatUuid);
+    }
+
+    public ArrayList<UserRentDTO> getUserRents(int userId) {
+        return this.dao.findByUserId(userId);
     }
 }
