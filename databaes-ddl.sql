@@ -261,7 +261,13 @@ CREATE TABLE public.users (
     deleted_at timestamp without time zone
 );
 
-
+CREATE TABLE public.contacts (
+    id SERIAL PRIMARY KEY,
+    user_uuid UUID NOT NULL, 
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(15))
+;
 
 ALTER TABLE public.users OWNER TO postgres;
 
@@ -294,16 +300,7 @@ ALTER SEQUENCE public.user_id_seq OWNED BY public.users.id;
 -- TOC entry 4723 (class 2604 OID 18767)
 -- Name: boats id; Type: DEFAULT; Schema: public; Owner: postgres
 --
-CREATE TABLE public.contacts (
-    id SERIAL PRIMARY KEY,
-    user_uuid UUID NOT NULL, 
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    phone VARCHAR(15),
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_uuid) REFERENCES public.users (uuid) ON DELETE CASCADE
-);
+
 
 ALTER TABLE ONLY public.boats ALTER COLUMN id SET DEFAULT nextval('public.boats_id_seq'::regclass);
 
