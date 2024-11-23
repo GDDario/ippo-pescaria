@@ -7,7 +7,7 @@
 <body onload="loadRents()">
   <%@ include file="/components/header.jsp" %>
 
-  <main class="container my-4">
+  <main class="container my-4" style="min-height: 72vh">
     <h1>Meus aluguéis</h1>
 
     <table class="table">
@@ -20,7 +20,6 @@
           <th scope="col">Fim</th>
           <th scope="col">Valor total</th>
           <th scope="col">Dia do aluguél</th>
-          <th scope="col">Ações</th>
         </tr>
       </thead>
       <tbody id="table-body">

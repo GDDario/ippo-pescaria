@@ -71,17 +71,6 @@ function displayRents(rents) {
         <td>${formatDate(rent.dateEnd)}</td>
         <td>R$ ${rent.total},00</td>
         <td>${formatDateTime(rent.createdAt)}</td>
-        <td>
-          <button class="btn btn-primary">
-            <i class="bi bi-clipboard"></i>
-            Detalhes
-          </button>
-
-          <button class="btn btn-danger">
-            <i class="bi bi-x"></i>
-            Cancelar
-          </button>
-        </td>
       </tr>
     `;
 
