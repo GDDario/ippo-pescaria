@@ -35,5 +35,17 @@
     loadAvailableRents();
 
     document.addEventListener('DOMContentLoaded', checkModalParameter);
+
+    function checkModalParameter() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const success = urlParams.get('rent_success');
+
+            if (success === "true") {
+                showToast('Barco alugado com sucesso!', 'success');
+                //window.history.pushState("object or string", "Title", "/ippo-pescaria/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', checkModalParameter);
 </script>
 

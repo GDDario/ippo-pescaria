@@ -70,7 +70,7 @@
   </div>
 
   <%@ include file="/components/footer.jsp" %>
+  <%@ include file="/components/toast.jsp" %>
 
-     <script src="app.js"></script>
   </body>
 </html>

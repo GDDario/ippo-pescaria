@@ -53,7 +53,7 @@ public class RentController extends HttpServlet {
 
             session.setAttribute("success", true);
 
-            response.sendRedirect("boat.jsp?id=" + boatUuid);
+            response.sendRedirect("boat.jsp?id=" + boatUuid + "&rent_success=true");
             return;
 
         } catch (IllegalArgumentException e) {

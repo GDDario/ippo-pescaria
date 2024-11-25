@@ -64,6 +64,7 @@
     function checkModalParameter() {
         const urlParams = new URLSearchParams(window.location.search);
         const openModal = urlParams.get('openRegisterModal');
+        const success = urlParams.get('register_success');
 
         if (openModal === 'true') {
             const myModal = new bootstrap.Modal(document.getElementById('register-modal'));
@@ -75,6 +76,11 @@
                         console.error("Erro ao limpar a sessão");
                     }
                 });
+        }
+
+        if (success === "true") {
+            showToast('Cadastrado com sucesso!', 'success');
+            window.history.pushState("object or string", "Title", "/ippo-pescaria/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
         }
     }
 

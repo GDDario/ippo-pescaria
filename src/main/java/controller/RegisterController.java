@@ -62,7 +62,7 @@ public class RegisterController extends HttpServlet {
             session.setAttribute("name", serviceResponse.getName());
             session.setAttribute("isLoggedIn", true);
 
-            response.sendRedirect("index.jsp?success=true");
+            response.sendRedirect("index.jsp?register_success=true");
             return;
 
         } catch (EmailAlreadyRegisteredException | IllegalArgumentException e) {

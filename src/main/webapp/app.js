@@ -3,9 +3,9 @@ var toastList = toastElList.map(function (toastEl) {
   return new bootstrap.Toast(toastEl)
 })
 
-function showToast() {
-  toastList[0].show()
-}
+//function showToast() {
+//  toastList[0].show()
+//}
 
 // Enable Tooltip
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

@@ -236,15 +236,16 @@ a.dropdown-item:hover {
 
 .scrollable {
     position: sticky;
-    top: 0; /* Mantém a coluna fixa no topo da tela */
-    height: 100vh; /* Ocupa toda a altura da viewport */
-    overflow-y: auto; /* Adiciona scroll interno quando necessário */
-    padding-right: 15px; /* Evita sobreposição do conteúdo com o scroll */
-    background-color: #fff; /* Garante um fundo sólido ao rolar */
-    z-index: 1000; /* Fica acima de outros elementos, se necessário */
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding-right: 15px;
+    background-color: #fff;
+    z-index: 1000;
 }
 
 .img-prev {
-    width: 300px;
+    width: 100%;
+    max-width: 300px;
     height: 200px;
 }
