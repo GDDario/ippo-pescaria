@@ -304,6 +304,13 @@ CREATE TABLE public.users (
     deleted_at timestamp without time zone
 );
 
+CREATE TABLE public.contacts (
+    id SERIAL PRIMARY KEY,
+    user_uuid UUID NOT NULL, 
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phone VARCHAR(15))
+;
 
 ALTER TABLE public.users OWNER TO postgres;
 
@@ -336,6 +343,7 @@ ALTER SEQUENCE public.user_id_seq OWNED BY public.users.id;
 -- TOC entry 4728 (class 2604 OID 18767)
 -- Name: boats id; Type: DEFAULT; Schema: public; Owner: postgres
 --
+
 
 ALTER TABLE ONLY public.boats ALTER COLUMN id SET DEFAULT nextval('public.boats_id_seq'::regclass);
 

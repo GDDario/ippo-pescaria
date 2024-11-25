@@ -53,6 +53,11 @@
         <servlet-name>RentController</servlet-name>
         <servlet-class>controller.RentController</servlet-class>
     </servlet>
+    
+  <servlet>
+        <servlet-name>ContactController</servlet-name>
+        <servlet-class>controller.ContactController</servlet-class>
+    </servlet>
 
     <!-- Mapping -->
     <servlet-mapping>
@@ -103,6 +108,11 @@
     <servlet-mapping>
         <servlet-name>RentController</servlet-name>
         <url-pattern>/RentController</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ContactController</servlet-name>
+        <url-pattern>/contact</url-pattern>
     </servlet-mapping>
 
     <!-- Configuration -->
