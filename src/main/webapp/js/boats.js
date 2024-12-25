@@ -23,8 +23,6 @@ function displayBoats(boatsContainerId, boats) {
     const content = `
           <div class="col-xl-3 col-lg-4 col-md-6 position-relative">
             <div class="card product-item">
-              <i class="bi bi-heart-fill position-absolute liked"></i>
-              <i class="bi bi-heart position-absolute like"></i>
               <a href="/ippo-pescaria/boat.jsp?id=${boat.uuid}">
                   <img src="uploads/boats/${boat.pictures[0]}" class="img-prev" alt="..."
                     data-bs-toggle="tooltip" data-bs-placement="top" title="Clique para acessar todos os dados do barco">
