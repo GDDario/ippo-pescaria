@@ -5,22 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulário de Contato</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
     }
     .form-background {
       background: url('img/carousel/carousel-1.jpg') no-repeat center center;
       background-size: cover;
       padding: 50px 0;
-    }
-    .container {
+        min-height: calc(76dvh + 5px);
+     }
+    .form-container {
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
@@ -73,20 +78,13 @@
     .submit-btn:hover {
       background-color: #0056b3;
     }
-    footer {
-      text-align: center;
-      padding: 20px 0;
-      background: #007BFF;
-      color: #fff;
-      margin-top: 50px;
-    }
   </style>
 </head>
 <body>
   <%@ include file="/components/header.jsp" %> 
 
   <div class="form-background">
-    <div class="container">
+    <div class="form-container">
       <h1>Contato</h1>
       <form action="contact" method="post">
         <div class="form-group">
@@ -110,6 +108,6 @@
     </div>
   </div>
 
-  <%@ include file="/components/footer.jsp" %> 
+    <%@ include file="/components/footer.jsp" %>
 </body>
 </html>
