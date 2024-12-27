@@ -83,7 +83,7 @@
 <body>
   <%@ include file="/components/header.jsp" %> 
 
-  <div class="form-background">
+  <div class="form-background px-3">
     <div class="form-container">
       <h1>Contato</h1>
       <form action="contact" method="post">
